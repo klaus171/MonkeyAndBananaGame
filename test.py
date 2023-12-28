@@ -17,7 +17,7 @@ background_img = pygame.transform.scale(background_img, (width, height))
 
 # 원숭이 이미지 로드 및 크기 조절
 monkey_img = pygame.image.load("monkey.png")
-monkey_img = pygame.transform.scale(monkey_img, (200, 200))
+monkey_img = pygame.transform.scale(monkey_img, (400, 400))
 
 # 바나나 이미지 로드 및 크기 조절
 banana_img = pygame.image.load("banana.png")
@@ -39,8 +39,12 @@ banana_speed = 5
 # 점수 초기화
 score = 0
 
-# 폰트 설정
-font = pygame.font.Font(None, 36)
+# 시스템 폰트 경로 설정 (운영체제에 따라 경로가 다를 수 있음)
+font_path = pygame.font.match_font('arial')
+
+# 시스템 폰트 로드
+font = pygame.font.Font(font_path, 36)  # 36은 폰트 크기
+
 
 # 제한 시간 설정 (초 단위)
 time_limit = 60
@@ -69,7 +73,15 @@ while True:
 
     # 시간 초과 시 게임 종료
     if elapsed_time >= time_limit:
-        print(f"게임 종료! 시간 초과. 최종 점수: {score}")
+        print(f"게임 종료!Game Over! Score:: {score}")
+
+        # 게임 종료 메시지 표시
+        final_score_text = font.render(f"Game Over! Score: {score}", True, (255, 255, 255))
+        screen.blit(final_score_text, (width // 2 - 150, height // 2 - 50))
+        pygame.display.flip()
+
+        # 잠시 대기 후 종료
+        pygame.time.wait(5000)  # 3000 밀리초 (3초) 동안 대기
         pygame.quit()
         sys.exit()
 
